@@ -26,6 +26,26 @@ export const overall = [
         des:"Thiên đường chăm sóc sức khỏe với hồ tắm onsen, tắm hơi Thổ Nhĩ Kỳ và các phòng trị liệu riêng"
     }
 ]
+
+export const images =[
+    {
+        _id:1,
+        url_data: "https://dam.melia.com/melia/file/xHxmX8wssXQ9AREqtLQq.jpg?im=RegionOfInterestCrop=(1920,960),regionOfInterest=(1771.5,1021.5)"
+    },
+    {
+        _id:2,
+        url_data: "https://dam.melia.com/melia/file/TKTgBDr1FHSabFCRoPys.jpg?im=RegionOfInterestCrop=(1920,960),regionOfInterest=(2150.0,1433.5)"
+    },
+    {
+        _id:3,
+        url_data: "https://dam.melia.com/melia/file/w8FYmG9t9uL36HQzJwc8.jpg?im=RegionOfInterestCrop=(1920,960),regionOfInterest=(1771.5,977.0)"
+    },
+    {
+        _id:4,
+        url_data: "https://dam.melia.com/melia/file/qgDPEDQszJbrV7t48vW3.jpg?im=RegionOfInterestCrop=(1920,960),regionOfInterest=(2150.0,1433.5)"
+    }
+
+]
 export const restaurant =[
     {
 

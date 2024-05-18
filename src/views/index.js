@@ -1,0 +1,6 @@
+export {default as Home} from './Home'
+export {default as Login} from './Login'
+export {default as Resgiter} from './Register'
+export {default as LisRooms} from './ListRooms'
+export  {default as RoomsAvailable} from './RoomAvalable'
+export {default as Payment} from './Payment'

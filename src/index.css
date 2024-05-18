@@ -5,4 +5,14 @@
 html{
     scroll-behavior: smooth;
     overflow-x: hidden;
+    font-family: 'Adobe Garamond Pro', sans-serif;
+                                                
+}
+.slick-arrow{
+    margin-right: 8px;
+    background-color: transparent;
+}
+.slick-next:before, .slick-prev:before {
+    color: #c0bebe;
+    font-size: 30px;
 }

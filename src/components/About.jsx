@@ -1,93 +1,129 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from "react";
 import {
-    ChefHat,
-    Gem,
-    HandHeart,
-    HandHelping,
-    Umbrella,
-    Users,
-  } from "lucide-react";
-import { overall } from '../constant';
-import { useTheme } from '../hooks/useTheme';
-export const About = () => {
-  const [activeTheme, setTheme] = useTheme()
+  ArrowLeft,
+  ArrowRight,
+  ChefHat,
+  Gem,
+  HandHeart,
+  HandHelping,
+  Umbrella,
+  Users,
+} from "lucide-react";
+// import { Paper, Grid, Typography, Slider, Slide } from "@mui/material";
+import { overall } from "../constant";
+import { motion, useAnimation } from "framer-motion";
+import SlideImg from "./SlideImg";
+
+const About = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const controlsTitle = useAnimation();
+  const controlsText = useAnimation();
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    const offset = window.scrollY;
+    if (offset > 200) {
+      setIsVisible(true);
+    }
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      controlsTitle.start({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 1, delay: 0.5 },
+      });
+      controlsText.start({
+        opacity: 1,
+        x: 0,
+        transition: { duration: 1, delay: 0.5 },
+      });
+    }
+  }, [isVisible, controlsTitle, controlsText]);
+
   return (
     <section id="about">
-    <div className="flex flex-col justify-center items-center gap-y-10 mx-auto">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="192"
-        height="56"
-        viewBox="54.00001525878906 26.49370002746582 191.99998474121094 55.53376770019531"
-        fill="none"
-        class="injected-svg"
-        data-src="https://dam.melia.com/melia/accounts/f8/4000018/projects/153/assets/db/78717/1fe7b07943fa3e61ffdeccfe9872ef08-1643619355.svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        role="img"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M238.795 31.8483L238.795 31.8482C238.939 31.8063 239.058 31.7718 239.141 31.7408C239.428 31.6335 239.762 31.5558 240.123 31.4718C240.834 31.3062 241.65 31.1162 242.42 30.6272C243.276 30.0865 244.58 29.1484 244.638 26.4937L244.64 32.1047C244.64 34.2119 242.167 35.0125 241.006 35.321C240.256 35.5162 237.645 36.1019 237.645 36.1019C236.506 36.3445 235.542 37.6973 235.542 39.0374V35.1246C235.542 32.7953 237.789 32.1411 238.795 31.8483ZM83.698 53.3769L90.1905 62.3567H93.6338L86.8611 53.2094C90.0521 52.2921 91.9546 50.1514 91.8999 47.0935C91.7592 42.4216 88.0914 41.3657 84.4527 41.3657H79.8081V62.3567H82.7747V53.3769H83.698ZM82.7749 43.811H84.2576C86.5264 43.811 88.8476 44.3679 88.9592 47.1763C89.0708 49.8449 86.3869 51.0406 83.8948 51.0406H82.7749V43.811ZM114.597 62.3564L112.052 56.9348H102.927L100.491 62.3564H97.4688L107.32 40.5591L117.706 62.3564H114.597ZM107.319 47.0361L103.961 54.5996H110.931L107.319 47.0361ZM125.401 62.3564V47.3704L141.241 62.9686V41.3654H138.387V56.1838L122.489 40.6699V62.3564H125.401ZM178.018 62.3564L175.329 49.1772L168.838 63.1627L162.29 49.622L159.517 62.3564H156.664L161.17 40.6965L168.81 56.8805L176.34 40.6699L180.873 62.3564H178.018ZM186.19 41.3657L186.248 62.3567H197.358V59.5772H189.017V51.986H197.246V49.5114H189.017V44.1453H197.358V41.3657H186.19ZM202.535 62.3567V41.3657H205.389V59.5772H211.8V62.3567H202.535ZM89.3956 81.7917V72.4087H91.9726V71.3101H85.7441V72.4087H88.235V81.7917H89.3956ZM99.3598 72.4087V75.4944H103.46V76.5364H99.3028V80.6942H103.572V81.7917H98.1411V71.3101H103.601V72.4087H99.3598ZM162.753 77.1764L165.943 81.7917H167.357L164.014 77.0782C165.51 76.9546 166.645 76.1067 166.685 74.2571C166.742 72.0748 165.103 71.3101 163.272 71.3101H161.268V81.7917H162.43V77.1764H162.753ZM162.459 72.4087H163.385C164.505 72.4087 165.51 72.7564 165.51 74.2571C165.496 75.536 164.349 76.2037 163.214 76.2037H162.459V72.4087ZM218.394 81.7917L215.202 77.1764H214.881V81.7917H213.718V71.3101H215.719C217.552 71.3101 219.19 72.0748 219.136 74.2571C219.093 76.1067 217.959 76.9546 216.461 77.0782L219.806 81.7917H218.394ZM215.832 72.4087H214.908V76.2037H215.665C216.797 76.2037 217.944 75.536 217.959 74.2571C217.959 72.7564 216.951 72.4087 215.832 72.4087ZM228.008 81.7917V72.4087H230.581V71.3101H224.354V72.4087H226.845V81.7917H228.008ZM239.623 82.0005C238.082 82.0005 236.851 81.0416 236.458 79.5548L236.39 79.2475L237.467 78.9425L237.591 79.2891C237.931 80.2214 238.6 80.8614 239.58 80.8741C240.713 80.888 241.734 79.9857 241.72 78.8721C241.707 78.0657 241.329 77.4534 240.616 77.1207L238.95 76.3559C237.802 75.828 236.933 75.0493 236.933 73.7855C236.922 72.2698 238.279 71.1434 239.804 71.1018C240.966 71.088 241.764 71.6021 242.421 72.5621L242.549 72.7284L241.637 73.3257L241.386 72.9918C240.98 72.4362 240.475 72.1577 239.792 72.2005C238.895 72.2282 238.067 72.8809 238.082 73.7705C238.097 74.5075 238.586 74.9523 239.244 75.2584L241.007 76.0648C242.156 76.5789 242.828 77.4118 242.911 78.6503C243.023 80.4582 241.457 82.0155 239.623 82.0005ZM174.704 75.4944V72.4087H178.943V71.3101H173.487V81.7917H178.915V80.6942H174.646V76.5365H178.804V75.4944H174.704ZM187.704 82.0005C186.166 82.0005 184.933 81.0416 184.541 79.5548L184.471 79.2475L185.548 78.9425L185.675 79.2891C186.011 80.2214 186.682 80.8614 187.663 80.8741C188.795 80.888 189.816 79.9857 189.803 78.8721C189.788 78.0657 189.41 77.4534 188.697 77.1207L187.032 76.3559C185.886 75.828 185.018 75.0493 185.018 73.7855C185.004 72.2698 186.361 71.1434 187.887 71.1018C189.046 71.088 189.845 71.6021 190.504 72.5621L190.63 72.7284L189.718 73.3257L189.468 72.9918C189.061 72.4362 188.556 72.1577 187.873 72.2005C186.977 72.2282 186.152 72.8809 186.166 73.7705C186.178 74.5075 186.667 74.9523 187.326 75.2584L189.089 76.0648C190.238 76.5789 190.91 77.4118 190.993 78.6503C191.106 80.4582 189.538 82.0155 187.704 82.0005ZM196.925 76.5642C196.913 79.554 199.375 82.0146 202.37 82.0274C205.378 82.0424 207.883 79.554 207.869 76.5642C207.856 73.6044 205.364 71.1714 202.37 71.1841C199.388 71.1992 196.939 73.6044 196.925 76.5642ZM198.087 76.5642C198.102 74.2433 199.962 72.3383 202.287 72.2828C204.749 72.2285 206.679 74.174 206.706 76.5365C206.751 78.914 204.764 80.9438 202.37 80.9311C199.99 80.9161 198.059 78.9279 198.087 76.5642ZM109.449 81.7917V71.3101H110.623V80.6942H113.465V81.7917H109.449ZM119.146 79.5548C119.539 81.0416 120.769 82.0005 122.31 82.0005C124.144 82.0155 125.712 80.4582 125.599 78.6503C125.516 77.4118 124.844 76.5789 123.695 76.0648L121.932 75.2584C121.274 74.9523 120.785 74.5075 120.769 73.7705C120.756 72.8809 121.583 72.2282 122.479 72.2005C123.163 72.1577 123.667 72.4362 124.074 72.9918L124.326 73.3257L125.236 72.7284L125.111 72.5621C124.451 71.6021 123.652 71.088 122.493 71.1018C120.968 71.1434 119.61 72.2698 119.622 73.7855C119.622 75.0493 120.493 75.828 121.64 76.3559L123.303 77.1207C124.016 77.4534 124.397 78.0657 124.409 78.8721C124.423 79.9857 123.401 80.888 122.27 80.8741C121.288 80.8614 120.618 80.2214 120.281 79.2891L120.154 78.9425L119.079 79.2475L119.146 79.5548ZM146.506 81.7918L145.372 80.3732L144.798 80.8052C143.863 81.5423 143.063 82.0148 141.958 81.972C140.348 81.9304 139.02 80.7775 138.991 79.0955C138.963 77.8582 139.733 76.8566 140.895 76.1068L141.69 75.5927L141.468 75.2866C140.964 74.6188 140.643 74.1325 140.643 73.3122C140.658 72.1015 141.594 71.1427 142.896 71.13C144.21 71.13 145.133 72.0472 145.175 73.2429C145.205 74.1325 144.657 74.7436 143.915 75.327L143.3 75.7868L145.485 78.623L146.686 77.2886L147.499 77.9691L146.212 79.4986L147.976 81.7918H146.506ZM142.278 76.398L141.425 76.9549C140.629 77.4967 140.083 78.3574 140.111 79.0401C140.166 79.9562 140.699 80.639 141.58 80.8885C142.153 81.0549 143.063 80.7926 143.721 80.2485L144.671 79.471L142.278 76.398ZM142.867 72.1303C142.252 72.143 141.803 72.6444 141.763 73.2694C141.749 73.6599 141.874 73.9094 142.113 74.2294L142.643 74.9665L143.357 74.4235C143.818 74.0769 144.112 73.6737 144.042 73.0903C143.959 72.4226 143.455 72.1014 142.867 72.1303ZM220.953 62.3564H218.07V41.3643H220.953V62.3564ZM242.896 62.3564L240.35 56.9348H231.222L228.788 62.3564H225.766L235.619 40.5591L246 62.3564H242.896ZM235.619 47.0361L232.259 54.5996H239.23L235.619 47.0361ZM63.0826 76.6901V81.7917H64.2432V71.3101H63.0547V75.5926H57.667V71.3101H56.5181V81.7917H57.724V76.6901H63.0826ZM75.6355 82.0274C72.641 82.0146 70.1792 79.554 70.1919 76.5642C70.2071 73.6044 72.655 71.1992 75.6355 71.1841C78.6299 71.1714 81.1209 73.6044 81.136 76.5642C81.1488 79.554 78.6439 82.0424 75.6355 82.0274ZM75.5519 72.2828C73.2296 72.3383 71.3666 74.2433 71.3538 76.5642C71.3259 78.9279 73.2563 80.9161 75.6356 80.9311C78.0289 80.9438 80.0162 78.914 79.9744 76.5365C79.9465 74.174 78.0137 72.2285 75.5519 72.2828ZM54.0028 52.2082C54.1156 58.0203 58.8451 62.9405 64.6386 62.8308C70.7683 62.6922 74.6314 58.3542 74.6314 52.9326V51.7635H66.626V54.2946H71.58C71.4951 57.8528 68.2483 60.2719 64.7794 60.1887C60.0754 60.0778 56.774 56.6017 56.774 52.3203C56.774 47.7328 60.2731 43.6455 65.0305 43.7564C67.8285 43.8407 70.0671 45.0907 71.4672 46.9541L73.5383 45.1184C71.2439 42.3377 68.7251 41.1698 65.1143 41.1155C59.0137 41.0034 53.8632 46.1466 54.0028 52.2082Z"
-          fill={`${activeTheme === 'light' ? '#fff' : '#252525'} `}
-        ></path>
-      </svg>
-      <div className="w-[70%] flex flex-col gap-y-24 justify-center items-center">
-        <h1 className="text-center text-neutral-800 dark:text-white font-title text-[50px]">
-          Thiên đường ven biển - sự hòa quyện giữa vẻ đẹp Địa Trung Hải và
-          nét quyết rũ mang hồn Việt
-        </h1>
-        <p className="text-neutral-800 dark:text-white text-center">
-          Nép mình bên đường bờ biển tuyệt đẹp của Việt Nam, Gran Meliá Nha
-          Trang nổi lên như một chuẩn xa hoa mới. Với phương châm “một cuộc
-          đời đáng sống” của người Tây Ban Nha cùng lòng hiếu khách của
-          người Việt, chúng tôi hứa hẹn mang đến những trải nghiệm khó quên,
-          từ những hành trình đậm dấu ấn văn hóa bản địa cho đến những đặc
-          quyền xa hoa ngay bên trong khu nghỉ dưỡng.
-        </p>
+      <div className="flex flex-col justify-center items-center gap-y-10 mx-auto">
+        <motion.h1
+          className="text-3xl font-semibold"
+          initial={{ opacity: 0, y: 50 }}
+          animate={controlsTitle}
+        >
+          Về chúng tôi
+        </motion.h1>
+        <div className="w-[70%] flex flex-col gap-y-24 justify-center items-center">
+          <motion.h1
+            className="text-center text-neutral-800 dark:text-white font-title text-[50px]"
+            initial={{ opacity: 0, y: 50 }}
+            animate={controlsTitle}
+          >
+            Thiên đường ven biển - sự hòa quyện giữa vẻ đẹp Địa Trung Hải và nét
+            quyết rũ mang hồn Việt
+          </motion.h1>
+          <motion.p
+            className="text-neutral-800 dark:text-white text-center"
+            initial={{ opacity: 0, x: -50 }}
+            animate={controlsText}
+            style={{fontFamily:"sans-serif"}}
+          >
+            Nép mình bên đường bờ biển tuyệt đẹp của Việt Nam, Gran Meliá Nha
+            Trang nổi lên như một chuẩn xa hoa mới. Với phương châm “một cuộc
+            đời đáng sống” của người Tây Ban Nha cùng lòng hiếu khách của người
+            Việt, chúng tôi hứa hẹn mang đến những trải nghiệm khó quên, từ
+            những hành trình đậm dấu ấn văn hóa bản địa cho đến những đặc quyền
+            xa hoa ngay bên trong khu nghỉ dưỡng.
+          </motion.p>
+        </div>
+        <button className="text-[#ca9e80] underline transition-all hover:translate-y-[-2px]">
+          Tìm hiểu thêm
+        </button>
       </div>
-      <button className="text-[#ca9e80] underline transition-all hover:translate-y-[-2px]">
-        Tìm hiểu thêm
-      </button>
-    </div>
-    <div className="flex justify-center items-center gap-[2rem] mt-10">
-      <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
-        <Gem color="#ca9e80" size={40} strokeWidth={1} />
-        <h3 className='dark:text-white'>Sang trọng</h3>
+      <div className="flex justify-center items-center gap-[2rem] mt-10" style={{fontFamily:"sans-serif"}}>
+        <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
+          <Gem color="#ca9e80" size={40} strokeWidth={1} />
+          <h3 className="dark:text-white">Sang trọng</h3>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
+          <ChefHat color="#ca9e80" size={40} strokeWidth={1} />
+          <h3 className="dark:text-white">Ẩm thực</h3>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
+          <Umbrella color="#ca9e80" size={40} strokeWidth={1} />
+          <h3 className="dark:text-white">Bãi biển</h3>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
+          <Users color="#ca9e80" size={40} strokeWidth={1} />
+          <h3 className="dark:text-white">Gia đình</h3>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
+          <HandHeart color="#ca9e80" size={40} strokeWidth={1} />
+          <h3 className="dark:text-white">Lãng mạn</h3>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
+          <HandHelping color="#ca9e80" size={40} strokeWidth={1} />
+          <h3 className="dark:text-white"> Bền vững</h3>
+        </div>
       </div>
-      <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
-        <ChefHat color="#ca9e80" size={40} strokeWidth={1} />
-        <h3 className='dark:text-white'>Ẩm thực</h3>
-      </div>
-      <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
-        <Umbrella color="#ca9e80" size={40} strokeWidth={1} />
-        <h3 className='dark:text-white'>Bãi biển</h3>
-      </div>
-      <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
-        <Users color="#ca9e80" size={40} strokeWidth={1} />
-        <h3 className='dark:text-white'>Gia đình</h3>
-      </div>
-      <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
-        <HandHeart color="#ca9e80" size={40} strokeWidth={1} />
-        <h3 className='dark:text-white'>Lãng mạn</h3>
-      </div>
-      <div className="flex flex-col justify-center items-center gap-3 md:w-full px-6 py-6 rounded-xl dark:bg-[#171717]">
-        <HandHelping color="#ca9e80" size={40} strokeWidth={1} />
-        <h3 className='dark:text-white'> Bền vững</h3>
-      </div>
-    </div>
-    {/* slide anh */}
-    <div className="my-10 bg-black"></div>
-    <div className="my-10 flex flex-wrap gap-y-3 gap-x-3 justify-center px-10 mx-auto">
-        {overall.map(item =>(
-            <div className="flex flex-col gap-3 px-5 py-4 items-start justify-start w-[28%] rounded-xl dark:bg-[#171717]" key={item.title}>
-                <h3 className='font-semibold dark:text-white'>{item.title}</h3>
-                <p className='dark:text-white'>{item.des}</p>
-            </div>
+      <div className="my-10 flex flex-wrap gap-y-3 gap-x-3 justify-center px-10 mx-auto" style={{fontFamily:"sans-serif"}}>
+        {overall.map((item) => (
+          <div
+            className="flex flex-col gap-3 px-5 py-4 items-start justify-start w-[28%] rounded-xl dark:bg-[#171717]"
+            key={item.title}
+          >
+            <h3 className="font-semibold dark:text-white">{item.title}</h3>
+            <p className="dark:text-white">{item.des}</p>
+          </div>
         ))}
-    </div>
-  </section>
-  )
-}
+      </div>
+    </section>
+  );
+};
+
+export default About;
